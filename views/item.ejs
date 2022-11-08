@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>item</title>
+</head>
+
+<body>
+    <h1></h1>
+    <div>
+        <% tables.forEach((item)=> { %>
+            <div>
+                名前
+                <div>
+                    <%= item.name %>
+                </div>
+            </div>
+
+
+            <div>
+                値段
+                <div>
+                    <%= item.price %>
+                </div>
+
+            </div>
+
+            <div>
+                購入日
+                <div>
+                    <%= item.date %>
+                </div>
+
+            </div>
+
+            <div>
+                購入店
+                <div>
+                    <%= item.shop %>
+                </div>
+            </div>
+
+            <div>
+                詳細
+                <div>
+                    <%= item.detail %>
+                </div>
+            </div>
+
+            <a href="/edit/ <%= item.id %>">編集</a>
+            <a href="/delete/ <%= item.id %>">削除</a>
+
+            <% }) %>
+    </div>
+</body>
+
+</html>

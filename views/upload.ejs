@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>upload</title>
+</head>
+
+<body>
+    <div>
+        <h1>データのアップロード</h1>
+        <form action="/upload/" method="POST" >
+            <input type="file" name="path" multiple="multiple" enctype="multipart/form-data">
+            <div>
+                <div>名前</div>
+                <input type="text" name="name">
+            </div>
+
+            <div>
+                <div>値段</div>
+                <input type="number" name="price">
+            </div>
+
+            <div>
+                <div>購入日</div>
+                <input type="date" name="date">
+            </div>
+
+            <div>
+                <div>購入店</div>
+                <input type="text" name="shop">
+            </div>
+
+            <div>
+                <div>詳細</div>
+                <input type="text" name="detail">
+            </div>
+            <button type="submit">送信</button>
+
+        </form>
+    </div>
+</body>
+
+</html>

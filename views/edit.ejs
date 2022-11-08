@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+</head>
+
+<body>
+    <div>
+        <h1>データの編集</h1>
+        <form action="/update/ <%= table[0].id %>" method="POST" >
+            <input type="file" name="path" multiple="multiple" enctype="multipart/form-data">
+            <div>
+                <div>名前</div>
+                <input type="text" name="name" value="<%= table[0].name %>">
+            </div>
+
+            <div>
+                <div>値段</div>
+                <input type="number" name="price" value="<%= table[0].price %>">
+            </div>
+
+            <div>
+                <div>購入日</div>
+                <input type="date" name="date" value="<%= table[0].date %>">
+            </div>
+
+            <div>
+                <div>購入店</div>
+                <input type="text" name="shop" value="<%= table[0].shop %>">
+            </div>
+
+            <div>
+                <div>詳細</div>
+                <input type="text" name="detail" value="<%= table[0].detail %>">
+            </div>
+            <button type="submit">更新</button>
+
+        </form>
+    </div>
+</body>
+
+</html>
