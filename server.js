@@ -1,11 +1,14 @@
 "use strict"
 import * as dotenv from 'dotenv'
+import * as path from 'path'
 dotenv.config()
 import Express from "express";
 import mysql from "mysql2";
 import ip from "ip"
 import multer from 'multer';
 import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
+import { log } from 'console';
 
 const app = Express();
 const PORT = process.env.PORT;
@@ -19,7 +22,7 @@ app.set("view engine", 'ejs');
 
 //body-parserの設定
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(fileUpload());
 
 // データベース接続情報
 const cone = mysql.createConnection({
@@ -38,7 +41,7 @@ app.get('/', (req, res) => {
     
     cone.query(sql, (err, result) => {
         res.render('mypage.ejs', {tables: result})
-        console.log(result);
+        // console.log(result);
     });
 });
 
@@ -62,11 +65,17 @@ app.get('/upload/', (req, res) => {
 
 // データの追加
 app.post('/upload/', (req, res) => {
+
+    // let img_path = req.files.path.mv
+    
+    console.log(req.files.path);
+
     const sql = "INSERT INTO tables SET ?"
 
     cone.query(sql, req.body, (err, result , fields) => {
         if (err) throw err;
-        console.log(result);
+        // console.log(result);
+        console.log('upload');
         res.redirect('/')
     });
 });

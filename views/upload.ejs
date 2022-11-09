@@ -11,8 +11,8 @@
 <body>
     <div>
         <h1>データのアップロード</h1>
-        <form action="/upload/" method="POST" >
-            <input type="file" name="path" multiple="multiple" enctype="multipart/form-data">
+        <form action="/upload/" method="POST" enctype="multipart/form-data">
+            <input type="file" name="path" multiple="multiple">
             <div>
                 <div>名前</div>
                 <input type="text" name="name">
