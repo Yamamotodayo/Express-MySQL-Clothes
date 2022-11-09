@@ -13,6 +13,13 @@
     <div>
         <% tables.forEach((item)=> { %>
             <div>
+                写真
+                <div>
+                    <img src="/images/<%= item.path %>">
+                </div>
+            </div>
+
+            <div>
                 名前
                 <div>
                     <%= item.name %>

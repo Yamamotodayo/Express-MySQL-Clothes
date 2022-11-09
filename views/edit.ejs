@@ -11,8 +11,14 @@
 <body>
     <div>
         <h1>データの編集</h1>
-        <form action="/update/ <%= table[0].id %>" method="POST" >
+        <form action="/update/<%= table[0].id %>" method="POST" >
+            <!-- <input type="file" name="path" multiple="multiple" enctype="multipart/form-data" required> requiredいるかどうか考える -->
             <input type="file" name="path" multiple="multiple" enctype="multipart/form-data">
+            <div>
+                <div>写真</div>
+                <img src="/images/<%= table[0].path %>" alt="">
+            </div>
+
             <div>
                 <div>名前</div>
                 <input type="text" name="name" value="<%= table[0].name %>">

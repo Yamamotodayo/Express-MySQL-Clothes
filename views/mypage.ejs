@@ -14,7 +14,8 @@
     <div>
         <% tables.forEach((item) => { %>
             <div>
-                <a href="/item/ <%= item.id %>"><%= item.name %></a>
+                <img src="/images/<%= item.path %>">
+                <a href="/item/<%= item.id %>"><%= item.name %></a>
             </div>
         <% }) %>
     </div>
