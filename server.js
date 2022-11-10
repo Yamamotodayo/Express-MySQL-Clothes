@@ -11,7 +11,6 @@ import fileUpload from "express-fileupload";
 import fs from "fs";
 import url from "url";
 
-
 const app = Express();
 const PORT = process.env.PORT;
 const ipAddress = ip.address(); // IPアドレス取得
@@ -30,8 +29,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 // app.use(Express.static(path.join(__dirname + '/public')));
-app.use(Express.static(__dirname + '/public'));
-app.use('/images', Express.static('/images'))
+app.use(Express.static(__dirname + "/public"));
+app.use("/images", Express.static("/images"));
 
 // データベース接続情報
 const cone = mysql.createConnection({
@@ -69,34 +68,52 @@ app.get("/upload/", (req, res) => {
 
 // データの追加
 app.post("/upload/", (req, res) => {
-  // アップロードされた画像の情報を取得
-  let uploadFile = req.files.path;
 
-  // サーバー上の保存位置
-  let uploadPath = `public/images/${uploadFile.name}`;
 
-  // メモリ上にあるファイルをサーバーパスへ移動させる
-  uploadFile.mv(uploadPath);
+  const file = req.files["path"];
 
-  fs.writeFile(uploadPath, req.files.path.data, (err) => {
+  if (file.length) {
+    for (const i of file) {
+      const path = __dirname + "/public/images" + i.name
+      console.log(path);
+      i.mv(path);
+      req.body.path = `${i.name}`
+    }
+  } else {
+    const path = __dirname + "/public/images" + req.files["path"].name;
+    i.mv(path)
+  }
+
+  // res.redirect("/")
+
+  // // アップロードされた画像の情報を取得
+  // let uploadFile = req.files.path;
+  // // console.log(req.files.path.data);
+
+  // console.log(req.files);
+  // // console.log(req.files.path);
+
+  // // サーバー上の保存位置
+  // let uploadPath = `public/images/${uploadFile.name}`;
+
+  // uploadFile.mv(uploadPath);
+
+  // let data = {'path': uploadFile.name};
+  // console.log(data);
+  // req.body.path = `${uploadFile.name}`;
+
+  // const sql = `INSERT INTO tables VALUES (id, "${data}", ?)`;
+
+
+
+
+  const sql = `INSERT INTO tables SET ?`;
+
+  cone.query(sql, req.body, (err, result, fields) => {
     if (err) throw err;
-
-    // let data = {'path': uploadFile.name};
-    // console.log(data);
-    req.body.path = `${uploadFile.name}`
-
-    // const sql = `INSERT INTO tables VALUES (id, "${data}", ?)`;
-    const sql = `INSERT INTO tables SET ?`;
-
-    cone.query(sql, req.body, (err, result, fields) => {
-      if (err) throw err;
-      console.log(result);
-      console.log("upload");
-      console.log(req.body);
-    //   console.log(data);
-    //   console.log(obj);
-      res.redirect("/");
-    });
+    
+    console.log(req.body);
+    res.redirect("/");
   });
 });
 
