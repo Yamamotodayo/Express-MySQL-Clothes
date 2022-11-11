@@ -12,10 +12,14 @@
     <h1></h1>
     <div>
         <% tables.forEach((item)=> { %>
-            <div>
-                写真
-                <div>
-                    <img src="/images/<%= item.path %>">
+
+            <div>写真<div>
+                
+                    <% JSON.parse(item.path).forEach((path) => { %>
+
+                        <img src="/images/<%= path %>">
+    
+                    <% }) %>
                 </div>
             </div>
 

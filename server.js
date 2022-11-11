@@ -138,12 +138,21 @@ app.get("/edit/:id", (req, res) => {
 
   cone.query(sql, [req.params.id], (err, result, fields) => {
     if (err) throw err;
-    res.render("edit", { table: result });
+    res.render("edit", { tables: result });
   });
 });
 
 //データの更新
 app.post("/update/:id", (req, res) => {
+
+//ここにファイルが空の場合の処理を書く、空だった場合もとの画像を入れるなど
+
+
+
+  console.log("↓↓↓↓↓↓↓");
+  // console.log(req.body);
+  // console.log(req.files);
+  console.log(req.body.oldpath);
   const sql = "UPDATE tables SET ? WHERE id = " + req.params.id;
 
   cone.query(sql, req.body, (err, result, fields) => {

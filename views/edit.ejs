@@ -11,37 +11,48 @@
 <body>
     <div>
         <h1>データの編集</h1>
-        <form action="/update/<%= table[0].id %>" method="POST" >
+        <form action="/update/<%= tables[0].id %>" method="POST">
+            <!-- <form action="/update/" method="POST"> -->
             <!-- <input type="file" name="path" multiple="multiple" enctype="multipart/form-data" required> requiredいるかどうか考える -->
-            <input type="file" name="path" multiple="multiple" enctype="multipart/form-data">
+            <input type="file" name="path" multiple="multiple" enctype="multipart/form-data" required>
+            <!-- <input type="hidden" name="oldpath" value="<%= tables[0].path %>"> -->
             <div>
                 <div>写真</div>
-                <img src="/images/<%= table[0].path %>" alt="">
+
+                <% tables.forEach((item)=> { %>
+
+                    <% JSON.parse(item.path).forEach((path) => { %>
+
+                        <img src="/images/<%= path %>">
+
+                    <% }) %>
+                <% }) %>
+
             </div>
 
             <div>
                 <div>名前</div>
-                <input type="text" name="name" value="<%= table[0].name %>">
+                <input type="text" name="name" value="<%= tables[0].name %>">
             </div>
 
             <div>
                 <div>値段</div>
-                <input type="number" name="price" value="<%= table[0].price %>">
+                <input type="number" name="price" value="<%= tables[0].price %>">
             </div>
 
             <div>
                 <div>購入日</div>
-                <input type="date" name="date" value="<%= table[0].date %>">
+                <input type="date" name="date" value="<%= tables[0].date %>">
             </div>
 
             <div>
                 <div>購入店</div>
-                <input type="text" name="shop" value="<%= table[0].shop %>">
+                <input type="text" name="shop" value="<%= tables[0].shop %>">
             </div>
 
             <div>
                 <div>詳細</div>
-                <input type="text" name="detail" value="<%= table[0].detail %>">
+                <input type="text" name="detail" value="<%= tables[0].detail %>">
             </div>
             <button type="submit">更新</button>
 
