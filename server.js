@@ -72,16 +72,20 @@ app.post("/upload/", (req, res) => {
 
   const file = req.files["path"];
 
+  let images = []
+
   if (file.length) {
     for (const i of file) {
-      const path = __dirname + "/public/images" + i.name
+      images.push(i.name)
+      const path = __dirname + "/public/images/" + i.name
       console.log(path);
       i.mv(path);
       req.body.path = `${i.name}`
     }
   } else {
-    const path = __dirname + "/public/images" + req.files["path"].name;
-    i.mv(path)
+    const path = __dirname + "/public/images/" + file.name;
+    images.push(file.name)
+    file.mv(path)
   }
 
   // res.redirect("/")
@@ -109,7 +113,18 @@ app.post("/upload/", (req, res) => {
 
   const sql = `INSERT INTO tables SET ?`;
 
-  cone.query(sql, req.body, (err, result, fields) => {
+  
+  const data = {
+      path: JSON.stringify(images),
+      name: req.body.name,
+      price: req.body.price,
+      date: req.body.date,
+      shop: req.body.shop,
+      detail: req.body.detail
+    }
+  
+
+  cone.query(sql, data, (err, result, fields) => {
     if (err) throw err;
     
     console.log(req.body);
@@ -139,8 +154,28 @@ app.post("/update/:id", (req, res) => {
 });
 
 // データの削除
-app.get("/delete/:id", (req, res) => {
+app.post("/delete/:id", (req, res) => {
   const sql = "DELETE FROM tables WHERE id = ?";
+
+  if (req.body.postID !== req.params.id) {
+    // console.log(req.body.postID);
+    // console.log(req.params.id);
+    // console.log("aaaa");
+    res.redirect("/")
+    return
+  }
+
+  // サーバーの画像を削除する
+  const sql2 = `SELECT tables.path FROM tables WHERE id = ${req.params.id}`
+  cone.query(sql2, (err, result, fields) => {
+    console.log("↓");
+    console.log(result[0].path);
+    console.log("↓↓↓↓↓↓");
+    JSON.parse(result[0].path).forEach(element => {
+      fs.unlinkSync(__dirname + "/public/images/" + element)
+    });
+  })
+
 
   cone.query(sql, [req.params.id], (err, result, fields) => {
     if (err) throw err;

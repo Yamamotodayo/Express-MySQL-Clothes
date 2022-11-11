@@ -57,8 +57,12 @@
                 </div>
             </div>
 
-            <a href="/edit/ <%= item.id %>">編集</a>
-            <a href="/delete/ <%= item.id %>">削除</a>
+            <a href="/edit/<%= item.id %>">編集</a>
+
+            <form action="/delete/<%= item.id %>" method="POST">
+                <input type="hidden" name="postID" value="<%= item.id %>">
+                <input type="submit" value="削除">
+            </form>
 
             <% }) %>
     </div>
