@@ -11,6 +11,11 @@ import fileUpload from "express-fileupload";
 import fs from "fs";
 import url from "url";
 
+// ↓ Router
+import mypageRouter from "./routers/mypage.js";
+import uploadRouter from "./routers/upload.js";
+import itemRouter from "./routers/item.js";
+
 const app = Express();
 const PORT = process.env.PORT;
 const ipAddress = ip.address(); // IPアドレス取得
@@ -32,105 +37,27 @@ app.use(fileUpload());
 app.use(Express.static(__dirname + "/public"));
 app.use("/images", Express.static("/images"));
 
-// データベース接続情報
-const cone = mysql.createConnection({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "Yama1106",
-  database: "clothes",
-});
 
-// テーブルtableのデータを取得してmypage.ejsで表示
-app.get("/", (req, res) => {
-  const sql = "SELECT * FROM tables";
 
-  cone.query(sql, (err, result) => {
-    res.render("mypage.ejs", { tables: result });
-    console.log(result);
-  });
-});
+app.use('/', mypageRouter);
+
+app.use('/upload', uploadRouter);
+
+app.use('/item', itemRouter);
+// app.use('/item/:id', itemRouter); これだとダメなぜ
+
+
+
 
 // アイテム紹介ページの表示
-app.get("/item/:id", (req, res) => {
-  const sql = "SELECT * FROM tables WHERE id = " + req.params.id;
+// app.get("/item/:id", (req, res) => {
+//   const sql = "SELECT * FROM tables WHERE id = " + req.params.id;
 
-  cone.query(sql, [req.params.id], (err, result, fields) => {
-    if (err) throw err;
-    res.render("item", { tables: result });
-  });
-});
-
-// アップロードフォームを表示
-app.get("/upload/", (req, res) => {
-  res.render("upload.ejs");
-});
-
-// データの追加
-app.post("/upload/", (req, res) => {
-
-
-  const file = req.files["path"];
-
-  let images = []
-
-  if (file.length) {
-    for (const i of file) {
-      images.push(i.name)
-      const path = __dirname + "/public/images/" + i.name
-      console.log(path);
-      i.mv(path);
-      req.body.path = `${i.name}`
-    }
-  } else {
-    const path = __dirname + "/public/images/" + file.name;
-    images.push(file.name)
-    file.mv(path)
-  }
-
-  // res.redirect("/")
-
-  // // アップロードされた画像の情報を取得
-  // let uploadFile = req.files.path;
-  // // console.log(req.files.path.data);
-
-  // console.log(req.files);
-  // // console.log(req.files.path);
-
-  // // サーバー上の保存位置
-  // let uploadPath = `public/images/${uploadFile.name}`;
-
-  // uploadFile.mv(uploadPath);
-
-  // let data = {'path': uploadFile.name};
-  // console.log(data);
-  // req.body.path = `${uploadFile.name}`;
-
-  // const sql = `INSERT INTO tables VALUES (id, "${data}", ?)`;
-
-
-
-
-  const sql = `INSERT INTO tables SET ?`;
-
-  
-  const data = {
-      path: JSON.stringify(images),
-      name: req.body.name,
-      price: req.body.price,
-      date: req.body.date,
-      shop: req.body.shop,
-      detail: req.body.detail
-    }
-  
-
-  cone.query(sql, data, (err, result, fields) => {
-    if (err) throw err;
-    
-    console.log(req.body);
-    res.redirect("/");
-  });
-});
+//   cone.query(sql, [req.params.id], (err, result, fields) => {
+//     if (err) throw err;
+//     res.render("item", { tables: result });
+//   });
+// });
 
 //データの編集
 app.get("/edit/:id", (req, res) => {
@@ -146,10 +73,12 @@ app.get("/edit/:id", (req, res) => {
 app.post("/update/:id", (req, res) => {
 
 //ここにファイルが空の場合の処理を書く、空だった場合もとの画像を入れるなど
+// if (req.files)
 
 
 
   console.log("↓↓↓↓↓↓↓");
+  console.log(req.files);
   // console.log(req.body);
   // console.log(req.files);
   console.log(req.body.oldpath);
