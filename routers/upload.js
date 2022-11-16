@@ -17,24 +17,33 @@ uploadRouter.get('/', (req, res) => {
 // データの追加
 uploadRouter.post("/", async (req, res) => {
     const file = req.files["path"];
+    console.log("fileのレングスは" + file.length);
+
+    let now = new Date().getTime();
   
-    let images = []
+    let images = [];
   
     if (file.length) {
       for await(const i of file) {
-        images.push(i.name)
-        const path = __dirname + "/../public/images/" + i.name
-        console.log(path);
+        let imgname = now + i.name 
+
+        const path = __dirname + "/../public/images/" + imgname;
+        images.push(imgname)
         i.mv(path);
         req.body.path = `${i.name}`
+      
       }
     } else {
-      const path = __dirname + "/../public/images/" + file.name;
-      images.push(file.name)
+      const imgname = now + file.name
+
+      const path = __dirname + "/../public/images/" + imgname;
+      images.push(imgname)
       file.mv(path)
     }
-  
+
     const sql = `INSERT INTO tables SET ?`;
+
+    console.log(req.files);
   
     const data = {
         path: JSON.stringify(images),

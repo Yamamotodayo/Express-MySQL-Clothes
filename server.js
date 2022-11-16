@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import * as path from "path";
 dotenv.config();
 import Express from "express";
+import cone from "./MySQL.js";
 import mysql from "mysql2";
 import ip from "ip";
 import multer from "multer";
@@ -15,6 +16,9 @@ import url from "url";
 import mypageRouter from "./routers/mypage.js";
 import uploadRouter from "./routers/upload.js";
 import itemRouter from "./routers/item.js";
+import deleteRouter from "./routers/delete.js";
+import editRouter from "./routers/edit.js";
+import updataRouter from "./routers/updata.js";
 
 const app = Express();
 const PORT = process.env.PORT;
@@ -46,81 +50,51 @@ app.use('/upload', uploadRouter);
 app.use('/item', itemRouter);
 // app.use('/item/:id', itemRouter); これだとダメなぜ
 
+app.use('/delete', deleteRouter);
+
+app.use('/edit', editRouter);
+
+app.use('/edit/updata', updataRouter);
 
 
 
-// アイテム紹介ページの表示
-// app.get("/item/:id", (req, res) => {
-//   const sql = "SELECT * FROM tables WHERE id = " + req.params.id;
+
+
+
+
+// //データの編集
+// app.get("/edit/:id", (req, res) => {
+//   const sql = "SELECT * FROM tables WHERE id = ?";
 
 //   cone.query(sql, [req.params.id], (err, result, fields) => {
 //     if (err) throw err;
-//     res.render("item", { tables: result });
+//     res.render("edit", { tables: result });
 //   });
 // });
 
-//データの編集
-app.get("/edit/:id", (req, res) => {
-  const sql = "SELECT * FROM tables WHERE id = ?";
-
-  cone.query(sql, [req.params.id], (err, result, fields) => {
-    if (err) throw err;
-    res.render("edit", { tables: result });
-  });
-});
-
 //データの更新
-app.post("/update/:id", (req, res) => {
+// app.post("edit/:id", (req, res) => {
 
-//ここにファイルが空の場合の処理を書く、空だった場合もとの画像を入れるなど
-// if (req.files)
-
-
-
-  console.log("↓↓↓↓↓↓↓");
-  console.log(req.files);
-  // console.log(req.body);
-  // console.log(req.files);
-  console.log(req.body.oldpath);
-  const sql = "UPDATE tables SET ? WHERE id = " + req.params.id;
-
-  cone.query(sql, req.body, (err, result, fields) => {
-    if (err) throw err;
-    console.log(result);
-    res.redirect("/");
-  });
-});
-
-// データの削除
-app.post("/delete/:id", (req, res) => {
-  const sql = "DELETE FROM tables WHERE id = ?";
-
-  if (req.body.postID !== req.params.id) {
-    // console.log(req.body.postID);
-    // console.log(req.params.id);
-    // console.log("aaaa");
-    res.redirect("/")
-    return
-  }
-
-  // サーバーの画像を削除する
-  const sql2 = `SELECT tables.path FROM tables WHERE id = ${req.params.id}`
-  cone.query(sql2, (err, result, fields) => {
-    console.log("↓");
-    console.log(result[0].path);
-    console.log("↓↓↓↓↓↓");
-    JSON.parse(result[0].path).forEach(element => {
-      fs.unlinkSync(__dirname + "/public/images/" + element)
-    });
-  })
+// //ここにファイルが空の場合の処理を書く、空だった場合もとの画像を入れるなど
+// // if (req.files)
 
 
-  cone.query(sql, [req.params.id], (err, result, fields) => {
-    if (err) throw err;
-    console.log(result);
-    res.redirect("/");
-  });
-});
+
+//   console.log("↓↓↓↓↓↓↓");
+//   console.log(req.files);
+//   // console.log(req.body);
+//   // console.log(req.files);
+//   console.log(req.body.oldpath);
+//   console.log(req.body);
+//   const sql = "UPDATE tables SET ? WHERE id = " + req.params.id;
+
+//   cone.query(sql, req.body, (err, result, fields) => {
+//     if (err) throw err;
+//     console.log(result);
+//     res.redirect("/");
+//   });
+// });
+
 
 // app.get('/upload/', (req, res) => {
 //     res.sendFile(path.join(__dirname, 'views/'))
