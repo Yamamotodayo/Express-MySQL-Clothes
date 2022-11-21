@@ -19,6 +19,12 @@
                     <img src="/images/<%= path %>">
 
                 <% }) %>
+                
+
+                    <img src="/images/<%= item.path %>">
+                    <img src="/images/<%= JSON.parse(item.path) %>">
+
+                
             
                 <a href="/item/<%= item.id %>"><%= item.name %></a>
             </div>

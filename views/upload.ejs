@@ -5,17 +5,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/output.css">
     <title>upload</title>
+    <!-- <style>
+        #preview img {
+            width: 100px;
+            border: 1px, solid #CCCCCC;
+        }
+    </style> -->
 </head>
 
 <body>
     <div>
-        <h1>データのアップロード</h1>
+        <h1 class="text-9xl bg-cyan-600">データのアップロード</h1>
         <form action="/upload" method="POST" enctype="multipart/form-data">
-            <input type="file" name="path" multiple="multiple" required>
+            <input type="file" name="path" multiple="multiple" onchange="previewImage(this)" required>
+
+            <div id="preview">
+            </div>
+
             <div>
                 <div>名前</div>
-                <input type="text" name="name">
+                <input type="text" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
 
             <div>
@@ -41,6 +52,21 @@
 
         </form>
     </div>
+
+    <script>
+        function previewImage(obj) {
+           for (let i = 0; i < obj.files.length; i++) {
+
+                let fileReader = new FileReader();
+                fileReader.onload = (e) => {
+                    console.log("aaaaa");
+                    document.getElementById('preview').innerHTML += '<img src= "' + e.target.result + '">';
+                }
+                fileReader.readAsDataURL(obj.files[i]);
+           }
+        }
+
+    </script>
 </body>
 
 </html>
