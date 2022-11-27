@@ -1,65 +1,70 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/output.css">
-    <title>upload</title>
+<%- include('partials/header'); %>
     <!-- <style>
         #preview img {
             width: 100px;
             border: 1px, solid #CCCCCC;
         }
     </style> -->
-</head>
-
-<body>
     <h1 class="text-2xl bg-cyan-600">データのアップロード</h1>
 
-    <div class="mx-16">
+    <div class="mx-16 lg:bg-red-800">
         <form action="/upload" method="POST" enctype="multipart/form-data">
             <input type="file" name="path" multiple="multiple" onchange="previewImage(this)" required>
 
-            <div id="preview">
-            </div>
+            <dl>
+                <div id="preview">
+                </div>
 
-            <div class="mt-5">
-                <div>名前</div>
-                <input type="text" name="name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            </div>
+                <div class="mt-5">
+                    <dt>名前</dt>
+                    <dd>
+                        <input type="text" name="name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </dd>
 
-            <div class="mt-5">
-                <div>値段</div>
-                <input type="number" name="price"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full p-2.5">
-            </div>
+                </div>
 
-            <div class="mt-5">
-                <div>購入日</div>
-                <input type="date" name="date"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full p-2.5">
-            </div>
+                <div class="mt-5">
+                    <dt>値段</dt>
+                    <dd>
+                        <input type="number" name="price"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full p-2.5">
+                    </dd>
 
-            <div class="mt-5">
-                <div>購入店</div>
-                <input type="text" name="shop"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full p-2.5">
-            </div>
+                </div>
 
-            <div class="mt-5">
-                <div>詳細</div>
-                <textarea name="detail" id="" cols="30" rows="10"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full h-44 p-2.5 overflow-y-scroll"></textarea>
-                <!-- <input type="text" name="detail" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full h-44 p-2.5 overflow-y-scroll"> -->
-            </div>
+                <div class="mt-5">
+                    <dt>購入日</dt>
+                    <dd>
+                        <input type="date" name="date"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full p-2.5">
+                    </dd>
 
-            <div class="flex justify-center">
-            <button type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded mt-5">送信</button>
-            </div>
+                </div>
+
+                <div class="mt-5">
+                    <dt>購入店</dt>
+                    <dd> <input type="text" name="shop"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full p-2.5">
+                    </dd>
+
+                </div>
+
+                <div class="mt-5">
+                    <dt>詳細</dt>
+                    <dd>
+                        <textarea name="detail" id="" cols="30" rows="10"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full h-44 p-2.5 overflow-y-scroll"></textarea>
+                        <!-- <input type="text" name="detail" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg w-full h-44 p-2.5 overflow-y-scroll"> -->
+                    </dd>
+
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded mt-5">送信</button>
+                </div>
+            </dl>
         </form>
     </div>
 
@@ -77,6 +82,5 @@
         }
 
     </script>
-</body>
 
-</html>
+<%- include('partials/footer'); %>
