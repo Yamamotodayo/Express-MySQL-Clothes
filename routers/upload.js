@@ -16,6 +16,7 @@ uploadRouter.get('/', (req, res) => {
 
 // データの追加
 uploadRouter.post("/", async (req, res) => {
+  console.log(req.body);
     const file = req.files["path"];
     console.log("fileのレングスは" + file.length);
 

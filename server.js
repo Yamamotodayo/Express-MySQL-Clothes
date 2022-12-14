@@ -19,6 +19,7 @@ import itemRouter from "./routers/item.js";
 import deleteRouter from "./routers/delete.js";
 import editRouter from "./routers/edit.js";
 import updataRouter from "./routers/updata.js";
+import searchRouter from "./routers/search.js";
 
 const app = Express();
 const PORT = process.env.PORT;
@@ -56,10 +57,7 @@ app.use('/edit', editRouter);
 
 app.use('/edit/updata', updataRouter);
 
-
-
-
-
+app.use('/search', searchRouter);
 
 
 // //データの編集

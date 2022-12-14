@@ -10,17 +10,17 @@ mypageRouter.get("/", (req, res) => {
 
   cone.query(sql, (err, result) => {
 
-    result.forEach(i => {
-      console.log("これは画像のpath: "+ (i.path));
-      console.log("これは画像のpath: "+ JSON.parse(i.path));
-      result
-    });
+    // result.forEach(i => {
+    //   console.log("これは画像のpath: "+ (i.path));
+    //   console.log("これは画像のpath: "+ JSON.parse(i.path));
+    //   result
+    // });
 
-    for (let i = 1; i < 1; i++) {
-      console.log(result[i]);
+    // for (let i = 1; i < 1; i++) {
+    //   console.log(result[i]);
       
-    }
-    console.log(result);
+    // }
+    // console.log(result);
     res.render("mypage.ejs", { tables: result });
     // console.log(result);
   });
