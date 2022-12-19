@@ -7,6 +7,8 @@ const searchRouter = Express.Router();
 searchRouter.get("/", (req, res) => {
     // console.log(req.query.q);
     const sql = "SELECT * FROM tables WHERE name LIKE ?";
+    // const sql = "SELECT * FROM tables WHERE name || detail LIKE ?"; 名前と詳細を条件に指定
+
     const query = req.query.q
     const word = "%" + query + "%";
 
@@ -21,8 +23,8 @@ searchRouter.get("/", (req, res) => {
 
         // 検索結果がない場合の処理を書く
         let message = null;
-        if (!result) {
-            message = "検索検索なし"
+        if (!result.length) {
+            message = "検索結果なし"
         }
 
         console.log(message);

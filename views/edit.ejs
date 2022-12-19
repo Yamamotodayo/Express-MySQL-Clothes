@@ -1,63 +1,120 @@
-<!DOCTYPE html>
-<html lang="ja">
+<%- include('partials/header'); %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit</title>
-</head>
+    <div class="mx-16">
+        <h1 class="text-2xl text-center mb-2">データの編集</h1>
 
-<body>
-    <div>
-        <h1>データの編集</h1>
         <form action="updata/<%= tables[0].id %>" method="POST" enctype="multipart/form-data">
             <!-- <form action="/update/" method="POST"> -->
             <!-- <input type="file" name="path" multiple="multiple" enctype="multipart/form-data" required> requiredいるかどうか考える -->
-            <input type="file" name="path" multiple="multiple">
+            <input type="file" name="path" multiple="multiple" onchange="previewImage(this)" lass="w-full">
             <input type="hidden" name="oldpath" value="<%= tables[0].path %>">
-            <div>
-                <div>写真</div>
 
                 <% tables.forEach((item)=> { %>
 
-                    <% JSON.parse(item.path).forEach((path) => { %>
-
-                        <img src="/images/<%= path %>">
-
-                    <% }) %>
+                    <div id="carouselExampleControls" class="carousel slide relative h-auto w-50" data-bs-ride="carousel">
+                        <div id="preview" class="carousel-inner relative w-auto overflow-hidden">
+            
+                            <% JSON.parse(item.path).forEach((path, index)=> { %>
+                                <div class="carousel-item <%= index == 0 ? 'active' : '' %> relative float-left w-full">
+                                    <img src="/images/<%= path %>" class="block w-2/5 h-auto mx-auto my-0" alt="Wild Landscape" />
+                                </div>
+                                <% }) %>
+            
+                        </div>
+                        <button
+                            class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                            type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon inline-block bg-no-repeat bg-black" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button
+                            class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                            type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon inline-block bg-no-repeat bg-black" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 <% }) %>
 
-            </div>
+            <dl>
+                <div class="mt-5">
+                    <dt>名前</dt>
+                    <dd>
+                        <input type="text" name="name" value="<%= tables[0].name %>"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </dd>
+                </div>
 
-            <div>
-                <div>名前</div>
-                <input type="text" name="name" value="<%= tables[0].name %>">
-            </div>
+                <div class="mt-5">
+                    <dt>値段</dt>
+                    <dd>
+                        <input type="text" name="price" value="<%= tables[0].price %>"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </dd>
+                </div>
 
-            <div>
-                <div>値段</div>
-                <input type="number" name="price" value="<%= tables[0].price %>">
-            </div>
+                <div class="mt-5">
+                    <dt>購入日</dt>
+                    <dd>
+                        <input type="date" name="date" value="<%= tables[0].date %>"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </dd>
+                </div>
 
-            <div>
-                <div>購入日</div>
-                <input type="date" name="date" value="<%= tables[0].date %>">
-            </div>
+                <div class="mt-5">
+                    <dt>購入店</dt>
+                    <dd>
+                        <input type="text" name="shop" value="<%= tables[0].shop %>"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </dd>
+                </div>
 
-            <div>
-                <div>購入店</div>
-                <input type="text" name="shop" value="<%= tables[0].shop %>">
-            </div>
+                <div class="mt-5">
+                    <dt>詳細</dt>
+                    <dd>
+                        <textarea name="detail" cols="30" rows="10"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"><%= tables[0].detail %></textarea>
+                    </dd>
+                </div>
+            </dl>
 
-            <div>
-                <div>詳細</div>
-                <input type="text" name="detail" value="<%= tables[0].detail %>">
+            <div class="flex justify-center">
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded mt-5">更新</button>
             </div>
-            <button type="submit">更新</button>
 
         </form>
     </div>
-</body>
+    <script src="/index.min.js"></script>
+    <script>
+            let count = 0
+        function previewImage(obj) {
 
-</html>
+            for (let i = 0; i < obj.files.length; i++) { 
+
+                let fileReader = new FileReader();
+                fileReader.onload = (e) => {
+                    console.log("aaaaa");
+
+                    // if (count == 0) {
+                    //     console.log("0000");
+                    //     // document.getElementById('preview').innerHTML += '<img src= "' + e.target.result + '" class="block w-full">';
+                    //     document.getElementById('preview').innerHTML += '<div class="carousel-item active relative float-left w-full"><img src= "' + e.target.result + '" class="block w-2/5 h-auto mx-auto my-0"></div>';
+                    //     count++
+                    //     console.log("カウント :"+count);
+                    //     return
+                    //     // <img src= "' + e.target.result + '" class="block w-full">
+                        
+                    //     // document.createElement('div')
+                    // }
+
+                    document.getElementById('preview').innerHTML += '<div class="carousel-item relative float-left w-full"><img src= "' + e.target.result + '" class="block w-2/5 h-auto mx-auto my-0"></div>';
+                    // document.getElementById('preview').innerHTML += '<img src= "' + e.target.result + '" >'
+                }
+                fileReader.readAsDataURL(obj.files[i]);
+            }
+        }
+
+    </script>
+
+<%- include('partials/footer'); %>

@@ -2,62 +2,92 @@
 
     <h1></h1>
 
-    <div>
+    <div class="mx-16">
         <% tables.forEach((item)=> { %>
 
+            <div id="carouselExampleControls" class="carousel slide relative h-auto w-50" data-bs-ride="carousel">
+                <div class="carousel-inner relative w-auto overflow-hidden">
+    
+                    <% JSON.parse(item.path).forEach((path, index)=> { %>
+                        <div class="carousel-item <%= index == 0 ? 'active' : '' %> relative float-left w-full">
+                            <img src="/images/<%= path %>" class="block w-2/5 h-auto mx-auto my-0" alt="Wild Landscape" />
+                        </div>
+                        <% }) %>
+    
+                </div>
+                <button
+                    class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+                    type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon inline-block bg-no-repeat bg-black" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                    class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+                    type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon inline-block bg-no-repeat bg-black" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
             <% JSON.parse(item.path).forEach((path)=> { %>
 
                 <!-- <img src="/images/<%= path %>" /> -->
 
                 <% }) %>
 
-
-
-
-                    <div>
-                        名前
-                        <div>
-                            <%= item.name %>
-                        </div>
+                <dl>
+                    <div class="mt-5">
+                        <dt>名前</dt>
+                        <dd>
+                            <input type="text" name="name" value="<%= item.name %>" disabled
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </dd>
                     </div>
 
-
-                    <div>
-                        値段
-                        <div>
-                            <%= item.price %>
-                        </div>
-
+                    <div class="mt-5">
+                        <dt>値段</dt>
+                        <dd>
+                            <input type="text" name="price" value="<%= item.price %>" disabled
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </dd>
                     </div>
 
-                    <div>
-                        購入日
-                        <div>
-                            <%= item.date %>
-                        </div>
-
+                    <div class="mt-5">
+                        <dt>購入日</dt>
+                        <dd>
+                            <input type="text" name="date" value="<%= item.date %>" disabled
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </dd>
                     </div>
 
-                    <div>
-                        購入店
-                        <div>
-                            <%= item.shop %>
-                        </div>
+                    <div class="mt-5">
+                        <dt>購入店</dt>
+                        <dd>
+                            <input type="text" name="shop" value="<%= item.shop %>" disabled
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        </dd>
                     </div>
 
-                    <div>
-                        詳細
-                        <div>
-                            <%= item.detail %>
-                        </div>
+                    <div class="mt-5">
+                        <dt>詳細</dt>
+                        <dd>
+                            <textarea name="detail" cols="30" rows="10" readonly
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"><%= item.detail %></textarea>
+                        </dd>
                     </div>
+                </dl>
 
-                    <a href="/edit/<%= item.id %>">編集</a>
+
+                <div class="flex justify-evenly">
+                    <a href="/edit/<%= item.id %>" 
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded mt-5">編集</a>
 
                     <form action="/delete/<%= item.id %>" method="POST">
                         <input type="hidden" name="postID" value="<%= item.id %>">
-                        <input type="submit" value="削除">
+                        <input type="submit" value="削除" id="delete"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded mt-5">
                     </form>
+                    <button id="delete2" class="w-20 h-10">テスト</button>
+                </div>
 
                     <% }) %>
     </div>
@@ -65,12 +95,12 @@
     <!-- 動かないやつ -->
     <% tables.forEach((item)=> { %>
 
-        <div id="carouselExampleControls" class="carousel slide relative" data-bs-ride="carousel">
-            <div class="carousel-inner relative w-full overflow-hidden">
+        <!-- <div id="carouselExampleControls" class="carousel slide relative h-auto w-50" data-bs-ride="carousel">
+            <div class="carousel-inner relative w-auto overflow-hidden">
 
-                <% JSON.parse(item.path).forEach((path)=> { %>
-                    <div class="carousel-item active relative float-left w-full">
-                        <img src="/images/<%= path %>" class="block w-full" alt="Wild Landscape" />
+                <% JSON.parse(item.path).forEach((path, index)=> { %>
+                    <div class="carousel-item <%= index == 0 ? 'active' : '' %> relative float-left w-full">
+                        <img src="/images/<%= path %>" class="block w-2/5 h-auto mx-auto my-0" alt="Wild Landscape" />
                     </div>
                     <% }) %>
 
@@ -78,18 +108,19 @@
             <button
                 class="carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
                 type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                <span class="carousel-control-prev-icon inline-block bg-no-repeat bg-black" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
             <button
                 class="carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
                 type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon inline-block bg-no-repeat" aria-hidden="true"></span>
+                <span class="carousel-control-next-icon inline-block bg-no-repeat bg-black" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
-        </div>
+        </div> -->
 
         <% }) %>
+    
             <!-- ここまで -->
 
 
@@ -125,5 +156,11 @@
             <!-- ここまで -->
 
             <script src="/index.min.js"></script>
+            <script>
+                const del  = document.getElementById('delete2')
+                del.addEventListener('click', () => {
+                    confirm('本当に削除しますか?');
+                })
+            </script>
 
             <%- include('partials/footer'); %>
