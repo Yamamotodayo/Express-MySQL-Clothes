@@ -1,2 +1,23 @@
+<script>
+    const id = document.getElementById('hamburger')
+    const body = document.getElementById('body');
+    const span = document.getElementsByTagName('span')
+
+    console.log(id);
+    id.addEventListener('click', () => {
+        console.log(id);
+        // id.classList.toggle('active');
+        body.classList.toggle('active')
+
+        for (let i = 0; i < span.length; i++) {
+            span[i].classList.toggle('active')
+        }
+
+        document.getElementById('slide-menu').classList.toggle('active');
+
+    });
+
+</script>
 </body>
+
 </html>
